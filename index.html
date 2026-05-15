@@ -458,10 +458,10 @@
       return (<div className="overlay"><div className="confirm-box"><div className="confirm-logo"><img src={LOGO_SRC} alt="Lightning Robotics"/><div className="confirm-title">Confirm Action</div></div><div className="confirm-msg">{message}</div><div className="confirm-btns"><button className="btn-cancel" onClick={onCancel}>Cancel</button><button className="btn-del" onClick={onConfirm}>Delete</button></div></div></div>);
     }
 
-    function Delta({ a, b }) {
+    function Delta({ a, b, invert }) {
       const d = +(b-a).toFixed(3);
-      if (d>0) return <span className="sd pos">▲{Math.abs(d)}</span>;
-      if (d<0) return <span className="sd neg">▼{Math.abs(d)}</span>;
+      if (d>0) return <span className={"sd " + (invert?"neg":"pos")}>▲{Math.abs(d)}</span>;
+      if (d<0) return <span className={"sd "(invert?"neg":"pos")}>▼{Math.abs(d)}</span>;
       return <span className="sd" style={{color:"#2A3560"}}>—</span>;
     }
 
@@ -590,7 +590,7 @@
                       <div className="sg">
                         <div className="st"><div className="sl">Voltage</div><Delta a={r.pre.v} b={r.post.v}/></div>
                         <div className="st"><div className="sl">Charge %</div><Delta a={r.pre.pct} b={r.post.pct}/></div>
-                        <div className="st"><div className="sl">Int Res</div><Delta a={r.pre.ir} b={r.post.ir}/></div>
+                        <div className="st"><div className="sl">Int Res</div><Delta a={r.pre.ir} b={r.post.ir} invert/></div>
                       </div>
                     </div>
                   </div>
@@ -658,7 +658,7 @@
                       <div className="sg">
                         <div className="st"><div className="sl">Voltage</div><div className="sv">{r.pre.v}→{r.post.v}</div><Delta a={r.pre.v} b={r.post.v}/></div>
                         <div className="st"><div className="sl">Charge %</div><div className="sv">{r.pre.pct}→{r.post.pct}</div><Delta a={r.pre.pct} b={r.post.pct}/></div>
-                        <div className="st"><div className="sl">Int Res</div><div className="sv">{r.pre.ir}→{r.post.ir}</div><Delta a={r.pre.ir} b={r.post.ir}/></div>
+                        <div className="st"><div className="sl">Int Res</div><div className="sv">{r.pre.ir}→{r.post.ir}</div><Delta a={r.pre.ir} b={r.post.ir} invert/></div>
                       </div>
                     ) : (
                       <div className="sg">
@@ -953,7 +953,7 @@
                           <div className="sg">
                             <div className="st"><div className="sl">Voltage</div><div className="sv">{r.pre.v}→{r.post.v}</div><Delta a={r.pre.v} b={r.post.v}/></div>
                             <div className="st"><div className="sl">Charge %</div><div className="sv">{r.pre.pct}→{r.post.pct}</div><Delta a={r.pre.pct} b={r.post.pct}/></div>
-                            <div className="st"><div className="sl">Int Res</div><div className="sv">{r.pre.ir}→{r.post.ir}</div><Delta a={r.pre.ir} b={r.post.ir}/></div>
+                            <div className="st"><div className="sl">Int Res</div><div className="sv">{r.pre.ir}→{r.post.ir}</div><Delta a={r.pre.ir} b={r.post.ir} invert/></div>
                           </div>
                         ) : (
                           <div style={{fontFamily:"var(--mono)",fontSize:10,color:"var(--orange)"}}>⏳ Pre-match only — awaiting post-match data</div>
