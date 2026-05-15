@@ -460,8 +460,8 @@
 
     function Delta({ a, b, invert }) {
       const d = +(b-a).toFixed(3);
-      if (d>0) return <span className={"sd " + (invert?"neg":"pos")}>▲{Math.abs(d)}</span>;
-      if (d<0) return <span className={"sd "(invert?"neg":"pos")}>▼{Math.abs(d)}</span>;
+      if (d>0) return <span className={"sd "+(invert?"neg":"pos")}>▲{Math.abs(d)}</span>;
+      if (d<0) return <span className={"sd "+(invert?"neg":"pos")}>▼{Math.abs(d)}</span>;
       return <span className="sd" style={{color:"#2A3560"}}>—</span>;
     }
 
