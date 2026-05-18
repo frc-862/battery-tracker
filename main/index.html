@@ -560,6 +560,21 @@
     function RecordDetail({ record, onBack, onDelete, sharedState }) {
       const {toast,confirm,setConfirm} = sharedState; const r = record;
       const isComplete = r.status==="complete" || r.post;
+      const [editing, setEditing] = useState(false);
+      const [form, setForm] = useState({
+        match: r.match,
+        preV: r.pre.v, prePct: r.pre.pct, preIR: r.pre.ir,
+        postV: r.post?r.post.v:"", postPct: r.post?r.post.pct:"", postIR: r.post?r.post.ir:""
+      });
+      async function saveEdit() {
+        const update = {
+          match: form.match,
+          pre: {v:+form.preV, pct:+form.prePct, ir:+form.preIR}
+        };
+        if (isComplete) update.post = {v:+form.postV, pct:+form.postPct, ir:+form.postIR};
+        await db.collection("records").doc(r.id).update(update);
+        setEditing(false);
+      }
       return (
         <div className="app">
           {toast&&<div className="toast">{toast}</div>}
@@ -569,6 +584,9 @@
             <div className="card">
               <div className="ch">
                 <span className="ct">{r.batteryId}</span>
+                <button className="btn-d" onClick={()=>setEditing(!editing)}>
+                  {editing ? "Cancel" : "Edit"}
+                </button>
                 <span className={"badge"+(isComplete?"":" badge-pre")}>
                   {isComplete ? "MATCH "+r.match : "MATCH "+r.match+" · PRE ONLY"}
                 </span>
@@ -578,12 +596,12 @@
                 {isComplete ? (
                   <div>
                     <div className="detail-grid">
-                      <div className="dst"><div className="sl">Pre Voltage</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"#5BA3FF",marginTop:4}}>{r.pre.v} V</div></div>
-                      <div className="dst"><div className="sl">Post Voltage</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"var(--yellow)",marginTop:4}}>{r.post.v} V</div></div>
-                      <div className="dst"><div className="sl">Pre Charge</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"#5BA3FF",marginTop:4}}>{r.pre.pct} %</div></div>
-                      <div className="dst"><div className="sl">Post Charge</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"var(--yellow)",marginTop:4}}>{r.post.pct} %</div></div>
-                      <div className="dst"><div className="sl">Pre Int Res</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"#5BA3FF",marginTop:4}}>{r.pre.ir} mΩ</div></div>
-                      <div className="dst"><div className="sl">Post Int Res</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"var(--yellow)",marginTop:4}}>{r.post.ir} mΩ</div></div>
+                      <div className="dst"><div className="sl">Pre Voltage</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"#5BA3FF",marginTop:4}}>{editing ? <input className="inp" value={form.preV} onChange={e=>setForm({...form,preV:e.target.value})}/> : r.pre.v+" V"}</div></div>
+                      <div className="dst"><div className="sl">Post Voltage</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"var(--yellow)",marginTop:4}}>{editing ? <input className="inp" value={form.postV} onChange={e=>setForm({...form,postV:e.target.value})}/> : r.post.v+" V"}</div></div>
+                      <div className="dst"><div className="sl">Pre Charge</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"#5BA3FF",marginTop:4}}>{ editing ? <input className="inp" value={form.prePct} onChange={e=>setForm({...form,prePct:e.target.value})}/> : r.pre.pct+" %"}</div></div>
+                      <div className="dst"><div className="sl">Post Charge</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"var(--yellow)",marginTop:4}}>{ editing ? <input className="inp" value={form.postPct} onChange={e=>setForm({...form,postPct:e.target.value})}/> : r.post.pct+" %"}</div></div>
+                      <div className="dst"><div className="sl">Pre Int Res</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"#5BA3FF",marginTop:4}}>{editing ? <input className="inp" value={form.preIR} onChange={e=>setForm({...form,preIR:e.target.value})}/> : r.pre.ir+" mΩ"}</div></div>
+                      <div className="dst"><div className="sl">Post Int Res</div><div style={{fontFamily:"var(--mono)",fontSize:20,color:"var(--yellow)",marginTop:4}}>{editing ? <input className="inp" value={form.postIR} onChange={e=>setForm({...form,postIR:e.target.value})}/> : r.post.ir+" mΩ"}</div></div>
                     </div>
                     <div style={{background:"#070B16",border:"1px solid var(--border)",padding:12,borderRadius:3}}>
                       <div className="sl" style={{marginBottom:10,color:"var(--yellow)"}}>Delta (Post − Pre)</div>
