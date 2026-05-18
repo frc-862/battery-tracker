@@ -625,6 +625,11 @@
                   </div>
                 )}
               </div>
+              {editing && (
+                <div className="cb" style={{paddingTop:0}}>
+                  <button className="btn btn-a" onClick={saveEdit}> Save Changes</button>
+                </div>
+             )}
             </div>
           </div>
         </div>
