@@ -1,0 +1,16 @@
+{
+  "projects": {},
+  "targets": {
+    "battery-e88da": {
+      "hosting": {
+        "readonly": [
+          "battery-readonly"
+        ],
+        "main": [
+          "battery-e88da"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

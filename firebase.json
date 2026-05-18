@@ -1,0 +1,22 @@
+{
+  "hosting": [
+    {
+      "target": "main",
+      "public": "main",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "target": "readonly",
+      "public": "read-only",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    }
+  ]
+}
