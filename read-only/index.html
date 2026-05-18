@@ -392,7 +392,7 @@
             </div>
             <div className="card"><div className="ch"><span className="ct">Fleet ({batteries.length})</span></div>
               {batteries.length===0&&<div className="empty">🔋<br/>No batteries registered yet.</div>}
-              {batteries.map(bat=>{const lr=getLastRec(bat.name);const pct=lr?lr.post.pct:0;const cnt=getBatRecs(bat.name).length;return(<div key={bat.id} className="bi" onClick={()=>setView({type:"bat",name:bat.name})}><div style={{flex:1}}><div className="bid">{bat.name}</div><div className="bsub">{cnt} match{cnt!==1?"es":""}{lr?" · Last: "+lr.post.v+"V · "+lr.post.pct+"%":""}</div><div className="hbar-w"><div className="hbar" style={{width:pct+"%",background:hColor(pct)}}/></div></div><span style={{color:"var(--muted)",fontSize:22}}>›</span></div>);})}
+              {batteries.map(bat=>{const lr=getLastRec(bat.name);const pct=(lr&&lr.post)?lr.post.pct:0;const cnt=getBatRecs(bat.name).length;return(<div key={bat.id} className="bi" onClick={()=>setView({type:"bat",name:bat.name})}><div style={{flex:1}}><div className="bid">{bat.name}</div><div className="bsub">{cnt} match{cnt!==1?"es":""}{(lr&&lr.post)?" · Last: "+lr.post.v+"V · "+lr.post.pct+"%":""}</div><div className="hbar-w"><div className="hbar" style={{width:pct+"%",background:hColor(pct)}}/></div></div><span style={{color:"var(--muted)",fontSize:22}}>›</span></div>);})}
             </div>
           </div>)}
           {tab==="history"&&(<div className="card"><div className="ch"><span className="ct">All Matches ({records.length})</span></div>
