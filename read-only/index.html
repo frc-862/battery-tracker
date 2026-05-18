@@ -260,7 +260,7 @@
         return out;
       },[batStats]);
 
-      const selBatRecs=useMemo(()=>selBat?records.filter(r=>r.batteryId===selBat&&r.post):[],
+      const selBatRecs=useMemo(()=>selBat?records.filter(r=>r.batteryId===selBat&&r.post):[],[selBat,records]);
       useEffect(()=>{if(!selBat&&batStats.length)setSelBat(batStats[0].name);},[batStats]);
 
       if(!records.length) return <div className="empty" style={{paddingTop:60}}>📊<br/>No match data yet.</div>;
