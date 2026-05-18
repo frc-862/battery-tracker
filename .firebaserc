@@ -1,5 +1,7 @@
 {
-  "projects": {},
+  "projects": {
+    "default": "battery-e88da"
+  },
   "targets": {
     "battery-e88da": {
       "hosting": {
