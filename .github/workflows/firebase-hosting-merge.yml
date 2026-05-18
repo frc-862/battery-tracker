@@ -14,7 +14,7 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BATTERY_E88DA }}
           channelId: live
           projectId: battery-e88da
-          target: 862battery
+          target: main
           firebaseToolsVersion: 13.29.1
   deploy_readonly:
     runs-on: ubuntu-latest
@@ -26,5 +26,5 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BATTERY_E88DA }}
           channelId: live
           projectId: battery-e88da
-          target: 862battery-readonly
+          target: readonly
           firebaseToolsVersion: 13.29.1
