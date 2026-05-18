@@ -1,2 +1,6 @@
 link to tracker:
-https://lightningbattery.netlify.app
+https://862battery.web.app
+
+link to read-only version:
+https://862battery-readonly.web.app
+
