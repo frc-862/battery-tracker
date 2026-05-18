@@ -239,15 +239,16 @@
 
       const batStats=useMemo(()=>{
         return batteries.map(bat=>{
-          const recs=records.filter(r=>r.batteryId===bat.name);
+          const recs=records.filter(r=>r.batteryId===bat.name&&r.post);
           if(!recs.length) return {name:bat.name,matches:0};
           return{name:bat.name,matches:recs.length,avgPostV:n2(avg(recs.map(r=>r.post.v))),avgDrainV:n2(avg(recs.map(r=>r.pre.v-r.post.v))),avgDrainPct:n1(avg(recs.map(r=>r.pre.pct-r.post.pct))),avgIR:n1(avg(recs.map(r=>r.post.ir))),lastIR:recs[0].post.ir,irTrend:recs.slice(0,8).reverse().map(r=>r.post.ir),avgPreV:n2(avg(recs.map(r=>r.pre.v))),recs};
         }).filter(b=>b.matches>0).sort((a,b)=>a.avgIR-b.avgIR);
       },[batteries,records]);
 
       const fleetStats=useMemo(()=>{
-        if(!records.length) return null;
-        return{avgDrainV:n2(avg(records.map(r=>r.pre.v-r.post.v))),avgDrainPct:n1(avg(records.map(r=>r.pre.pct-r.post.pct))),avgPostV:n2(avg(records.map(r=>r.post.v))),avgPostIR:n1(avg(records.map(r=>r.post.ir)))};
+        const complete=records.filter(r=>r.post);
+        if(!complete.length) return null;
+        return{avgDrainV:n2(avg(complete.map(r=>r.pre.v-r.post.v))),avgDrainPct:n1(avg(complete.map(r=>r.pre.pct-r.post.pct))),avgPostV:n2(avg(complete.map(r=>r.post.v))),avgPostIR:n1(avg(complete.map(r=>r.post.ir)))};
       },[records]);
 
       const alerts=useMemo(()=>{
@@ -259,7 +260,7 @@
         return out;
       },[batStats]);
 
-      const selBatRecs=useMemo(()=>selBat?records.filter(r=>r.batteryId===selBat):[],[selBat,records]);
+      const selBatRecs=useMemo(()=>selBat?records.filter(r=>r.batteryId===selBat&&r.post):[],
       useEffect(()=>{if(!selBat&&batStats.length)setSelBat(batStats[0].name);},[batStats]);
 
       if(!records.length) return <div className="empty" style={{paddingTop:60}}>📊<br/>No match data yet.</div>;
