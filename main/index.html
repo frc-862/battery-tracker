@@ -245,7 +245,7 @@
     function fmtTs(ts){ if(!ts)return""; try{return new Date(ts.toDate?ts.toDate():ts).toLocaleString();}catch{return"";} }
     function fmtTsShort(ts){ if(!ts)return""; try{return new Date(ts.toDate?ts.toDate():ts).toLocaleDateString();}catch{return"";} }
     function fmtTsTime(ts){ if(!ts)return""; try{return new Date(ts.toDate?ts.toDate():ts).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}catch{return"";} }
-    function irColor(ir){ return ir<18?"#39FF14":ir<21?"#F5C800":"#FF5555"; }
+    function irColor(ir){ return ir<18?"#39FF14":ir<20?"#F5C800":"#FF5555"; }
     function voltColor(v){ return v>12.4?"#39FF14":v>12.0?"#F5C800":"#FF5555"; }
 
     /* Compute next match number for a battery */
