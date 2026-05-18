@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  build_and_deploy:
+  deploy_main:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,4 +14,17 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BATTERY_E88DA }}
           channelId: live
           projectId: battery-e88da
+          target: 862battery
+          firebaseToolsVersion: 13.29.1
+  deploy_readonly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BATTERY_E88DA }}
+          channelId: live
+          projectId: battery-e88da
+          target: 862battery-readonly
           firebaseToolsVersion: 13.29.1
